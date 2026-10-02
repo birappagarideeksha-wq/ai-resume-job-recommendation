@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Analysis Results{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="mb-4">
+        <h2>Resume Analysis Results</h2>
+        <p class="text-muted">Top recommended roles based on resume/job-description similarity.</p>
+    </div>
+
+    {% set selected_count = matches | selectattr("selected", "equalto", true) | list | length %}
+    <div class="card p-4 mb-4 selection-summary">
+        {% if selected_count > 0 %}
+            <div class="status-heading selected-status">✓ Selected for Matching Job Roles</div>
+            <p class="mb-0">Your resume meets the {{ selection_threshold }}% minimum match threshold for {{ selected_count }} of the displayed role{{ 's' if selected_count != 1 else '' }}.</p>
+        {% else %}
+            <div class="status-heading not-selected-status">✗ Not Selected for the Displayed Roles</div>
+            <p class="mb-0">Your resume did not reach the {{ selection_threshold }}% minimum match threshold for any of the displayed roles.</p>
+        {% endif %}
+        <small class="text-muted d-block mt-2">This is an automated resume-match result, not an actual employer selection decision.</small>
+    </div>
+
+    <div class="card p-4 mb-4">
+        <h4>Detected Skills</h4>
+        {% if skills %}
+            {% for skill in skills %}
+                <span class="skill">{{ skill }}</span>
+            {% endfor %}
+        {% else %}
+            <p>No supported skills were detected.</p>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for job in matches %}
+        <div class="col-md-6">
+            <div class="card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                    <h4>{{ job.title }}</h4>
+                    <div class="text-end">
+                        <strong class="score">{{ job.score }}%</strong>
+                        {% if job.selected %}
+                            <div><span class="status-badge selected-badge">✓ Selected</span></div>
+                        {% else %}
+                            <div><span class="status-badge not-selected-badge">✗ Not Selected</span></div>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="text-muted small mb-0">Selection threshold: {{ selection_threshold }}%</p>
+
+                <div class="progress my-3">
+                    <div class="progress-bar" role="progressbar"
+                         style="width: {{ job.score }}%"></div>
+                </div>
+
+                <h6>Required Skills</h6>
+                <p>
+                    {% for skill in job.required %}
+                        <span class="badge text-bg-secondary me-1 mb-1">{{ skill }}</span>
+                    {% endfor %}
+                </p>
+
+                <h6>Skill Gap</h6>
+                {% if job.missing %}
+                    <p class="text-danger">
+                        {% for skill in job.missing %}
+                            <span class="badge text-bg-danger me-1 mb-1">{{ skill }}</span>
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p class="text-success">No missing skills from the current skill list.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card p-4 mt-4">
+        <h4>Extracted Resume Text Preview</h4>
+        <div class="resume-box">{{ resume_text }}</div>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary mt-4">Analyze Another Resume</a>
+</div>
+{% endblock %}
