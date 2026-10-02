@@ -1,0 +1,44 @@
+body {
+    background: #f5f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.hero {
+    padding: 80px 0;
+}
+
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+.btn-primary {
+    border-radius: 10px;
+}
+
+.skill {
+    display: inline-block;
+    padding: 7px 12px;
+    margin: 4px;
+    border-radius: 20px;
+    background: #e9f2ff;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 20px;
+}
+
+.resume-box {
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+}

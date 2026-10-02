@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Analysis Results{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="mb-4">
+        <h2>Resume Analysis Results</h2>
+        <p class="text-muted">Top recommended roles based on resume/job-description similarity.</p>
+    </div>
+
+    <div class="card p-4 mb-4">
+        <h4>Detected Skills</h4>
+        {% if skills %}
+            {% for skill in skills %}
+                <span class="skill">{{ skill }}</span>
+            {% endfor %}
+        {% else %}
+            <p>No supported skills were detected.</p>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for job in matches %}
+        <div class="col-md-6">
+            <div class="card p-4 h-100">
+                <div class="d-flex justify-content-between">
+                    <h4>{{ job.title }}</h4>
+                    <strong>{{ job.score }}%</strong>
+                </div>
+
+                <div class="progress my-3">
+                    <div class="progress-bar" role="progressbar"
+                         style="width: {{ job.score }}%"></div>
+                </div>
+
+                <h6>Required Skills</h6>
+                <p>
+                    {% for skill in job.required %}
+                        <span class="badge text-bg-secondary me-1 mb-1">{{ skill }}</span>
+                    {% endfor %}
+                </p>
+
+                <h6>Skill Gap</h6>
+                {% if job.missing %}
+                    <p class="text-danger">
+                        {% for skill in job.missing %}
+                            <span class="badge text-bg-danger me-1 mb-1">{{ skill }}</span>
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p class="text-success">No missing skills from the current skill list.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card p-4 mt-4">
+        <h4>Extracted Resume Text Preview</h4>
+        <div class="resume-box">{{ resume_text }}</div>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary mt-4">Analyze Another Resume</a>
+</div>
+{% endblock %}
