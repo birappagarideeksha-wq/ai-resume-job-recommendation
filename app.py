@@ -16,9 +16,12 @@ DATABASE = os.path.join(BASE_DIR, "database.db")
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 ALLOWED_EXTENSIONS = {"pdf"}
 
+<<<<<<< HEAD
 # Minimum resume-to-job match score required to mark a role as Selected.
 SELECTION_THRESHOLD = 50.0
 
+=======
+>>>>>>> 7e3acd7dccb700985f1f1efffa01053177e499e8
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 SKILLS = [
@@ -110,7 +113,10 @@ def calculate_matches(resume_text):
             "id": job["id"],
             "title": job["title"],
             "score": round(float(score) * 100, 2),
+<<<<<<< HEAD
             "selected": (float(score) * 100) >= SELECTION_THRESHOLD,
+=======
+>>>>>>> 7e3acd7dccb700985f1f1efffa01053177e499e8
             "missing": missing,
             "required": sorted(required)
         })
@@ -210,8 +216,12 @@ def analyze():
             "results.html",
             matches=top_matches,
             skills=skills,
+<<<<<<< HEAD
             resume_text=resume_text[:3000],
             selection_threshold=SELECTION_THRESHOLD
+=======
+            resume_text=resume_text[:3000]
+>>>>>>> 7e3acd7dccb700985f1f1efffa01053177e499e8
         )
     except Exception as exc:
         flash(f"Error analyzing resume: {exc}")

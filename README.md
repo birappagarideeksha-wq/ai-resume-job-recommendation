@@ -85,6 +85,7 @@ The matching percentage is a similarity score produced by the model; it is not a
 - Resume improvement suggestions
 - Course recommendations for missing skills
 - More detailed resume parsing
+<<<<<<< HEAD
 
 
 ## Selection Status
@@ -96,3 +97,5 @@ The results page now shows **Selected** or **Not Selected** for each recommended
 - The threshold is defined in `app.py` as `SELECTION_THRESHOLD = 50.0` and can be changed if required.
 
 This status represents an automated **resume-job matching result** and should not be treated as an actual employer hiring decision.
+=======
+>>>>>>> 7e3acd7dccb700985f1f1efffa01053177e499e8
